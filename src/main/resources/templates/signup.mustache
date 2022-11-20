@@ -1,0 +1,152 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js" integrity="sha512-CswfmQmJj8DXhm29Qc5eLk5//2EW1CaI6de+RmRhSrWrXRhkBQ3795tuwJvT6DK6EF4IVqJIRmBg8EokL6c87g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+
+        function form_check(){
+            var id = document.getElementById("id");
+            var password = document.getElementById("password");
+            var password2 = document.getElementById("password2");
+            var name = document.getElementById("name");
+            var phone = document.getElementById("phone");
+            var education = document.getElementById("education");
+            var isMajor = document.getElementById("isMajor");
+
+            if (id.value == "") {
+                alert("아이디를 입력하세요.");
+                id.focus(); //focus(): 커서가 깜빡이는 현상, blur(): 커서가 사라지는 현상
+                return false;
+            };
+
+            var passwordCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+
+            if (password.value == "") {
+                alert("비밀번호를 입력하세요.");
+                password.focus();
+                return false;
+            };
+
+             if (!passwordCheck.test(password.value)) {
+                alert("비밀번호는 영문자+숫자+특수문자 조합으로 8~25자리 사용해야 합니다.");
+                password.focus();
+                return false;
+              };
+
+             if (!passwordCheck.test(password2.value)) {
+                alert("비밀번호 재확인 항목을 입력해주세요.");
+                password.focus();
+                return false;
+              };
+
+              if (password.value !== password2.value) {
+                alert("비밀번호가 일치하지 않습니다.");
+                password2.focus();
+                return false;
+              };
+
+            if (name.value == "") {
+                alert("이름을 입력하세요.");
+                name.focus();
+                return false;
+            };
+
+            if (phone.value == "" || phone.length ) {
+                alert("전화번호를 입력하세요.");
+                phone.focus();
+                return false;
+            };
+
+            if (phone.value ) {
+                alert("전화번호는 10~11자리여야 합니다.");
+                phone.focus();
+                return false;
+            };
+
+            var phoneCheck = /^[0-9]+/g;
+             if (!phoneCheck.test(phone.value)) {
+                alert("전화번호는 숫자만 입력할 수 있습니다.");
+                phone.focus();
+                return false;
+              }
+
+            if(education.value == ""){
+                alert("최종 학력을 선택해주세요.");
+                education.focus();
+                return false;
+            };
+
+            if (!isMajorYes.checked && !isMajorNo.checked) {
+                alert("전공 여부를 선택해주세요.");
+                return false;
+            }
+
+            alert("유효성검사 완료!");
+
+        }
+    </script>
+</head>
+
+
+<body>
+
+<button onclick="fn_hello()"> </button>
+<form method="post" action="/register" encType="utf-8">
+    <div class="container">
+        <h1>회원가입</h1>
+        <div class="form-group">
+            <label for="id">아이디</label>
+            <input type="text" class="form-control" id="id" name="id" placeholder="사용자 아이디">
+            <button type="button" onclick="id_check();">중복확인</button>
+        </div>
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" class="form-control" id="password" name="password"  placeholder="영문자+숫자+특수기호 포함">
+
+            <label for="password">비밀번호 재확인</label>
+            <input type="password" class="form-control" id="password2" name="password2">
+
+        </div>
+
+        <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="사용자 이름">
+        </div>
+        <div class="form-group">
+            <label for="phone">전화번호</label>
+            <input type="number" class="form-control" id="phone" name="phone" placeholder="'-'없이 숫자만 입력해주세요.">
+        </div>
+
+        <div class="form-group">
+            <label for="education">학력</label>
+            <select class="form-select" aria-label="Default select example" id="education" name="education">
+                <option selected value = "">최종 학력을 선택해주세요</option>
+                <option value="H">고등학교 졸업</option>
+                <option value="U">대학교 졸업(학사)</option>
+                <option value="G">대학원 졸업(석사 이상)</option>
+            </select>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="isMajor" id="isMajorYes" value="Y">
+            <label class="form-check-label" for="major_yes">
+                전공자
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="isMajor" id="isMajorNo" value="N">
+            <label class="form-check-label" for="major_No">
+                비전공자
+            </label>
+        </div>
+
+
+        <button type="button" onclick="form_check();" class="btn btn-primary">가입 완료</button>
+    </div>
+</form>
+</body>
+</html>
