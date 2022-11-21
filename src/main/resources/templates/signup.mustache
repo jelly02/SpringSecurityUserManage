@@ -55,24 +55,19 @@
                 return false;
             };
 
-            if (phone.value == "" || phone.length ) {
+            if (phone.value == "" ) {
                 alert("전화번호를 입력하세요.");
                 phone.focus();
                 return false;
             };
 
-            if (phone.value ) {
-                alert("전화번호는 10~11자리여야 합니다.");
-                phone.focus();
-                return false;
-            };
+            var phoneCheck = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
 
-            var phoneCheck = /^[0-9]+/g;
-             if (!phoneCheck.test(phone.value)) {
-                alert("전화번호는 숫자만 입력할 수 있습니다.");
+            if(!phoneCheck.test(phone.value)){
+                alert("전화번호를 정확하게 입력해주세요.");
                 phone.focus();
                 return false;
-              }
+              };
 
             if(education.value == ""){
                 alert("최종 학력을 선택해주세요.");
@@ -87,6 +82,8 @@
 
             alert("유효성검사 완료!");
 
+            document.register_form.submit()
+
         }
     </script>
 </head>
@@ -95,7 +92,7 @@
 <body>
 
 <button onclick="fn_hello()"> </button>
-<form method="post" action="/register" encType="utf-8">
+<form name="register_form" method="post" action="/register" accept-charset="UTF-8">
     <div class="container">
         <h1>회원가입</h1>
         <div class="form-group">

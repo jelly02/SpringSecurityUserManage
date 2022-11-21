@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.SpringSecurity.sample.mapper.MemberMapper">
-    <select id="getMemberInfo" parameterType="String" resultType="com.SpringSecurity.sample.vo.Member">
-        SELECT
-            id, password, name,phone, role, education, isMajor
-        FROM member
-        WHERE id = #{id}
-    </select>
+<mapper namespace="com.manage.foruser.Mapper.UserMapper">
 
-    <insert id="insertMember" parameterType="com.SpringSecurity.sample.vo.Member">
+    <insert id="insertMember" parameterType="com.manage.foruser.vo.User">
         INSERT INTO member (id, password, name, phone, role, education, isMajor)
         VALUES (#{id}, #{password}, #{name}, #{phone}, #{role}, #{education}, #{isMajor})
     </insert>
+
+    <select id="loginCheck" resultType="String" >
+        SELECT ROLE
+        from member
+        WHERE id = #{id} and password = #{password}
+    </select>
 </mapper>
