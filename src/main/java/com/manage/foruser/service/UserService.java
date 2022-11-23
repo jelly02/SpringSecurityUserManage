@@ -15,6 +15,12 @@ public class UserService implements UserDetailsService {
 
     private final UserMapper userMapper;
 
+    //중복 아이디 체크
+    public int idChk(String id) throws Exception {
+        int result = userMapper.idChk(id);
+        return result;
+    }
+
     //회원가입 처리
     @Transactional
     public int insertMember(User user) {

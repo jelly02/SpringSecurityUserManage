@@ -11,6 +11,9 @@ public interface UserMapper {
     //SpringSecurity : 회원 조회하기
     Optional<User> findById(String id);
 
+    //중복 id체크
+    int idChk(String id);
+
     //회원가입
     int insertMember(User user);
 

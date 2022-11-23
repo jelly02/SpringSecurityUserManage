@@ -7,8 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -68,28 +67,37 @@ public class UserController {
         return "sign-up";
     }
 
+    //중복 아이디 처리
+    @ResponseBody
+    @PostMapping("/id-check")
+    public int idChk(@RequestParam("id") String id) throws Exception {
+        int result = userService.idChk(id);
+
+        return result;
+    }
+
     //회원가입 처리
     @PostMapping("/register")
-    public String register(User User, Model model){
+    public String register(User user, Model model) throws Exception {
 
         System.out.println("여기 컨트롤러인데요. 왔나요?");
+        System.out.println("컨트롤러의 User"+user);
 
+        //아이디 중복 확인
+        String id = user.getId();
+        int idCheck = userService.idChk(id);
 
-        System.out.println("컨트롤러의 User"+User);
+        if (idCheck == 0) {
+            //아이디 중복되지 않음
+            int result = userService.insertMember(user);
+            System.out.println("여기 컨트롤러인데요 회원가입 됐나요?**************");
 
-        int result = userService.insertMember(User);
-
-        System.out.println("여기 컨트롤러인데요 회원가입 됐나요?**************"+"result값"+result);
-
-        return "redirect:/";
-
-//        if (result == 1) {
-//            model.addAttribute("message", "[회원가입성공] 로그인 후 서비스 이용하세요");
-//            return "/loginSuccess";
-//        } else {
-//            model.addAttribute("message", "[회원가입실패] 가입 정보를 다시 확인하시기 바랍니다.");
-//            return "/loginFail";
-//        }
+            model.addAttribute("message", "[회원가입성공] 로그인 후 서비스 이용하세요");
+            return "/loginSuccess";
+        } else {
+            //아이디 중복됨
+            return "/signup";
+        }
     }
 
     //로그아웃
