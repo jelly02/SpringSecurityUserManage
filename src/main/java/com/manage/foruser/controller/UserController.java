@@ -2,6 +2,7 @@ package com.manage.foruser.controller;
 
 import com.manage.foruser.service.UserService;
 import com.manage.foruser.vo.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@RequiredArgsConstructor //final 객체 생성자 생성
 public class UserController {
 
     private final UserService userService;
-    public UserController(UserService _userService){
-        this.userService = _userService;
-    }
 
     @GetMapping("/")
     public String home(){
@@ -66,7 +65,7 @@ public class UserController {
     //회원가입 페이지
     @GetMapping("/signup")
     public String signup(){
-        return "signup";
+        return "sign-up";
     }
 
     //회원가입 처리
@@ -76,6 +75,8 @@ public class UserController {
         System.out.println("컨트롤러의 User"+User);
 
         int result = this.userService.insertMember(User);
+
+        System.out.println("여기 컨트롤러인데요 회원가입 됐나요?**************"+"result값"+result);
 
         if (result == 1) {
             model.addAttribute("message", "[회원가입성공] 로그인 후 서비스 이용하세요");
