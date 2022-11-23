@@ -23,7 +23,8 @@ public class UserService implements UserDetailsService {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setRole("USER");
 
-        int result = this.userMapper.insertMember(user);
+        int result = userMapper.insertMember(user);
+        System.out.println("여기 서비스인데요 회원가입 됐나요?**************"+"result값"+result);
 
         return result;
     }
@@ -36,13 +37,8 @@ public class UserService implements UserDetailsService {
     }
 
 
-    /**
-     * Spring Security 필수 메소드 구현
-     *
-     * @param
-     * @return UserDetails
-     * @throws UsernameNotFoundException 유저가 없을 때 예외 발생
-     */
+
+    //Spring security login method
     @Override // 기본적인 반환 타입은 UserDetails, UserDetails를 상속받은 UserInfo로 반환 타입 지정 (자동으로 다운 캐스팅됨)
     public User loadUserByUsername(String id) throws UsernameNotFoundException { // 시큐리티에서 지정한 서비스이기 때문에 이 메소드를 필수로 구현
         return userMapper.findById(id)

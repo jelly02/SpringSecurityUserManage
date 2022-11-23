@@ -4,13 +4,13 @@
 <mapper namespace="com.manage.foruser.Mapper.UserMapper">
 
     <insert id="insertMember" parameterType="com.manage.foruser.vo.User">
-        INSERT INTO member (id, password, name, phone, role, education, isMajor)
+        INSERT INTO whynot (id, password, name, phone, role, education, isMajor)
         VALUES (#{id}, #{password}, #{name}, #{phone}, #{role}, #{education}, #{isMajor})
     </insert>
 
     <select id="loginCheck" resultType="String" >
         SELECT ROLE
-        from member
+        from test
         WHERE id = #{id} and password = #{password}
     </select>
 </mapper>
